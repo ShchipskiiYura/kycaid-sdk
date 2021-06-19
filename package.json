@@ -1,0 +1,79 @@
+{
+  "name": "@kycaid/react-native-sdk",
+  "description": "KYCAID React Native SDK",
+  "version": "1.0.0",
+  "keywords": [
+    "react-native",
+    "sdk",
+    "kycaid",
+    "kyc",
+    "kyb"
+  ],
+  "nativePackage": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kycaid/react-native-sdk.git"
+  },
+  "homepage": "https://github.com/kycaid/react-native-sdk",
+  "author": "kycaid <info@kycaid.com>",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./lib && tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "tsc": "tsc",
+    "start": "react-native start --reset-cache",
+    "run:ios": "react-native run-ios --project-path ./example/ios",
+    "start:android": "adb shell am start -n com.reactnative.sdk.example/.MainActivity",
+    "run:android": "cd example/android && ./gradlew installDebug && npm run start:android",
+    "test": "jest",
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx"
+  },
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.60.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@types/jest": "^25.2.1",
+    "@types/react": "^16.8.14",
+    "@types/react-native": "~0.63.2",
+    "@types/react-redux": "^7.1.15",
+    "@types/react-test-renderer": "16.9.0",
+    "babel-jest": "^26.0.1",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "hybrid-navigation": "^1.2.0",
+    "jest": "^26.0.1",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react": "16.13.1",
+    "react-native": "^0.63.3",
+    "react-test-renderer": "16.11.0",
+    "typescript": "^3.7.3"
+  },
+  "jest": {
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "react-native-webview": "^11.2.4",
+    "react-redux": "^7.2.2",
+    "redux-saga": "^1.1.3"
+  },
+  "bugs": {
+    "url": "https://github.com/kycaid/react-native-sdk/issues"
+  },
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  }
+}
