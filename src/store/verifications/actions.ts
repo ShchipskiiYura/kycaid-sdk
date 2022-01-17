@@ -10,6 +10,7 @@ import { VerificationData } from './types';
 export interface GetVerificationPayload {
   verification_id: string;
   api_token: string;
+  api_url?: string;
 }
 
 export interface GetVerificationFetch {

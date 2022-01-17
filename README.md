@@ -26,9 +26,10 @@ function App() {
         <SafeAreaView>
             <KYCAID
                 config={{
-                    api_token: '<api_token>',
-                    form_id: '<form_id>',
-                    response_url: '<response_url>',
+                    api_url: '<api_url>',
+                    api_token: '<api_token>', 
+                    applicant_id: '<applicant_id>', 
+                    form_id: '<form_id>'
                 }}
                 verificationCallback={handleVerificationCallback}
             />
@@ -36,6 +37,29 @@ function App() {
     )
 }
 ```
+
+## Reference
+### Props
+
+###`api_url`
+*string (2048)*
+
+API endpoint URL.
+
+###`api_token` (Required)
+*string (36)*
+
+API authorization token (can be taken in customer dashboard).
+
+###`applicant_id`
+*string (36)*
+
+The applicant’s unique identificator.
+
+###`form_id` (Required)
+*string (36)*
+
+The form unique identificator (can be taken in customer dashboard).
 
 ## Documentation
 

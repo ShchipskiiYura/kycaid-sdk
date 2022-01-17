@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect } from 'react';
+import React, { FC, ReactElement, useEffect, useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from './store/store';
@@ -13,8 +13,9 @@ import {
 
 export interface Config {
   form_id: string;
+  applicant_id?: string;
+  api_url?: string;
   api_token: string;
-  response_url?: string;
 }
 
 interface Props {
@@ -29,6 +30,7 @@ const KYCaidComponent: FC<Props> = ({
   const dispatch = useDispatch();
   const generatedForm = useSelector(selectGenerateFormData);
   const verificationData = useSelector(selectGetVerificationData);
+  const webviewRef = useRef();
 
   useEffect(() => {
     dispatch(generateForm(config));
@@ -41,22 +43,37 @@ const KYCaidComponent: FC<Props> = ({
     }
   }, [verificationData?.verification_id]);
 
-  const onNavigationStateChange = (event: any) => {
-    if (event?.url === (config.response_url || 'https://www.kycaid.com/')) {
-      if (generatedForm?.verification_id) {
-        dispatch(getVerification({
+  const onMessage = (event: any) => {
+    console.log('NR RECEIVE MESSAGE: ', event.nativeEvent.data);
+
+    try {
+      const message = JSON.parse(event.nativeEvent.data);
+
+      if (message.type === 'kycaid:forms:completed') {
+        generatedForm?.verification_id && dispatch(getVerification({
+          api_url: config.api_url,
           api_token: config.api_token,
           verification_id: generatedForm.verification_id,
         }));
       }
+
+    } catch (e) {
+      console.error(`Error during parse post message: ${e.message} ${e.stack}`);
     }
-  }
+  };
+
+  const onLoadEnd = () => {
+    // @ts-ignore
+    webviewRef?.current?.postMessage(JSON.stringify({ type: 'kycaid:rn:ready' }));
+  };
 
   return (
     <WebView
+      ref={() => webviewRef}
       mediaPlaybackRequiresUserAction={true}
       source={{ uri: generatedForm?.form_url || '' }}
-      onNavigationStateChange={onNavigationStateChange}
+      onMessage={onMessage}
+      onLoadEnd={onLoadEnd}
     />
   );
 }
