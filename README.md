@@ -41,25 +41,30 @@ function App() {
 ## Reference
 ### Props
 
-###`api_url`
+`api_url`
 *string (2048)*
 
 API endpoint URL.
 
-###`api_token` (Required)
+`api_token` (Required)
 *string (36)*
 
 API authorization token (can be taken in customer dashboard).
 
-###`applicant_id`
+`applicant_id`
 *string (36)*
 
 The applicant’s unique identificator.
 
-###`form_id` (Required)
+`form_id` (Required)
 *string (36)*
 
 The form unique identificator (can be taken in customer dashboard).
+
+`verificationCallback`
+*function*
+
+The callback which triggered when the form was completed by the applicant.
 
 ## Documentation
 
