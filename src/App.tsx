@@ -15,6 +15,7 @@ export interface Config {
   form_id: string;
   applicant_id?: string;
   api_url?: string;
+  response_url?: string;
   api_token: string;
 }
 
@@ -67,6 +68,18 @@ const KYCaidComponent: FC<Props> = ({
     webviewRef?.current?.postMessage(JSON.stringify({ type: 'kycaid:rn:ready' }));
   };
 
+  const onNavigationStateChange = (event: any) => {
+    if (event?.url === config.response_url) {
+      if (generatedForm?.verification_id) {
+        dispatch(getVerification({
+          api_url: config.api_url,
+          api_token: config.api_token,
+          verification_id: generatedForm.verification_id
+        }));
+      }
+    }
+  }
+
   return (
     <WebView
       ref={() => webviewRef}
@@ -74,6 +87,7 @@ const KYCaidComponent: FC<Props> = ({
       source={{ uri: generatedForm?.form_url || '' }}
       onMessage={onMessage}
       onLoadEnd={onLoadEnd}
+      onNavigationStateChange={onNavigationStateChange}
     />
   );
 }
