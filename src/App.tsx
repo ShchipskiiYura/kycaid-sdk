@@ -57,9 +57,7 @@ const KYCaidComponent: FC<Props> = ({
     }
   }
 
-  console.log('config', config)
   const formUrl = generatedForm?.form_url ? `${generatedForm?.form_url}?reactNative=1${config.language ? `&lang=${config.language}` : ''}` : '';
-  console.log('formUrl', formUrl)
 
   return (
     <WebView
