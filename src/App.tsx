@@ -1,5 +1,5 @@
 import React, { FC, ReactElement, useEffect, useRef } from 'react';
-import { WebView } from '@kycaid/react-native-webview';
+import { WebView } from 'react-native-webview';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { store } from './store/store';
 import {
@@ -57,7 +57,9 @@ const KYCaidComponent: FC<Props> = ({
     }
   }
 
+  console.log('config', config)
   const formUrl = generatedForm?.form_url ? `${generatedForm?.form_url}?reactNative=1${config.language ? `&lang=${config.language}` : ''}` : '';
+  console.log('formUrl', formUrl)
 
   return (
     <WebView
